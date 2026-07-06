@@ -5,12 +5,16 @@
 **a. Initial design**
 
 - Briefly describe your initial UML design.
+  - My initial UML design was a bit more spread out than what I ended up with. I mapped out the classes based on the different responsibilities the project needed, like representing pets, representing tasks, building a schedule, and explaining that schedule. That led me to sketch six pieces total: Owner, Pet, Task, Scheduler, DailyPlan, and ScheduleEntry, along with a Priority enum for task ratings.
 - What classes did you include, and what responsibilities did you assign to each?
+  - Owner held the owner's name and preferences, and could have multiple Pets attached to it. Pet stored basic info like species and kept a list of Task objects tied to that pet. Task was a simple data class representing one care activity, with fields like title, duration, priority, and whether it was flexible or not. Scheduler was where all the actual decision making happened, like sorting tasks by priority and fitting them into the available time. DailyPlan was meant to hold the output of that process, and ScheduleEntry was a small helper meant to pair each task with a start and end time.
 
 **b. Design changes**
 
 - Did your design change during implementation?
+  - Yeah, once I went back and reviewed my class skeleton, I caught a couple of structural issues I hadn't noticed while just drawing the UML. The main one was that Scheduler needed to reach an owner's preferences, but there was no path to actually get there from a Pet or Task object. I also noticed available_minutes was awkwardly defined in two places at once.
 - If yes, describe at least one change and why you made it.
+  - The bigger fix was adding an owner back reference on Pet, since preferences live on Owner but Scheduler only really has access to Pet and Task objects when building a plan. Without that link, there was no way for the scheduling logic to factor in things like preferred walk times. I also removed available_minutes from Scheduler.**init** and kept it only as a parameter on generate_plan(), since having it defined in both places could have caused a mismatch between what the scheduler was initialized with and what got passed in later. Making Scheduler stateless this way means each call to generate_plan() is self contained and easier to test on its own.
 
 ---
 

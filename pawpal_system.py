@@ -36,9 +36,10 @@ class Task:
 
 
 class Pet:
-    def __init__(self, name: str, species: str):
+    def __init__(self, name: str, species: str, owner: Optional["Owner"] = None):
         self.name = name
         self.species = species
+        self.owner = owner  # back-reference so Scheduler can reach preferences
         self.tasks: List[Task] = []
 
     def add_task(self, task: Task) -> None:
@@ -57,7 +58,7 @@ class Owner:
         self.pets: List[Pet] = []
 
     def add_pet(self, pet: Pet) -> None:
-        """Add a pet to this owner's list of pets."""
+        """Add a pet to this owner's list of pets, and set pet.owner back-reference."""
         pass
 
     def set_preference(self, key: str, value) -> None:
@@ -66,10 +67,18 @@ class Owner:
 
 
 class Scheduler:
-    def __init__(self, available_minutes: int):
-        self.available_minutes = available_minutes
+    """
+    Stateless by design: available_minutes and preferences are passed into
+    generate_plan() per call, rather than stored on the instance. This avoids
+    the ambiguity of a Scheduler holding a stale budget across multiple plans.
+    """
 
-    def generate_plan(self, tasks: List[Task], available_minutes: int) -> dict:
+    def generate_plan(
+        self,
+        tasks: List[Task],
+        available_minutes: int,
+        preferences: Optional[dict] = None,
+    ) -> dict:
         """
         Build a daily plan from the given tasks and time budget.
 
