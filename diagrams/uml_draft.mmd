@@ -1,0 +1,47 @@
+classDiagram
+    class Priority {
+        <<enumeration>>
+        LOW
+        MEDIUM
+        HIGH
+    }
+
+    class Owner {
+        +string name
+        +dict preferences
+        +List~Pet~ pets
+        +add_pet(pet)
+        +set_preference(key, value)
+    }
+
+    class Pet {
+        +string name
+        +string species
+        +List~Task~ tasks
+        +add_task(task)
+        +get_tasks()
+    }
+
+    class Task {
+        +string id
+        +string title
+        +int duration_minutes
+        +Priority priority
+        +string category
+        +bool is_flexible
+        +bool completed
+    }
+
+    class Scheduler {
+        +int available_minutes
+        +generate_plan(tasks, available_minutes) dict
+        +explain_plan(scheduled, skipped) string
+        -_sort_by_priority(tasks)
+        -_fits_in_remaining_time(task, remaining)
+    }
+
+    Owner "1" o-- "*" Pet : has
+    Pet "1" o-- "*" Task : has
+    Task "1" -- "1" Priority : rated
+    Scheduler ..> Task : reads
+    Scheduler ..> Pet : reads preferences
