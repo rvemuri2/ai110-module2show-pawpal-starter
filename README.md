@@ -109,6 +109,9 @@ Sample test output:
 | Conflict handling |           | e.g., overlapping time slots      |
 | Recurring tasks   |           | e.g., daily vs. weekly            |
 
+I'm going to fill in the table by creating a new table:
+![table](./image.png)
+
 ## 📸 Demo Walkthrough
 
 Describe your app in numbered steps so a reader can follow along without watching a video:

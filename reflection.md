@@ -23,12 +23,16 @@
 **a. Constraints and priorities**
 
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
+  - My scheduler considers three main constraints: available time, task priority, and whether a task is fixed to a specific clock time. Available time acts as a hard budget, once it's used up, nothing else gets scheduled no matter how important it is. Priority determines the order flexible tasks get slotted in, since a busy owner would rather guarantee the high priority stuff happens even if something low priority gets bumped. Fixed time tasks get treated differently from flexible ones, since something like giving meds at a specific time isn't something the scheduler should feel free to move around.
 - How did you decide which constraints mattered most?
+  - I decided time and fixed commitments mattered most because those are non-negotiable in real life. A pet owner can't stretch their actual number of free minutes, and a vet appointment can't just happen whenever the algorithm feels like it. Priority came second, since it's more of a soft preference that only matters once the hard constraints are already satisfied.
 
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
+  - One tradeoff my scheduler makes is that it detects scheduling conflicts (two fixed time tasks that overlap) but doesn't automatically resolve them. It just returns a warning message explaining what overlaps and lets the owner decide what to do about it, instead of picking one task to bump or trying to auto-reschedule around the conflict.
 - Why is that tradeoff reasonable for this scenario?
+  - This is a reasonable tradeoff for this scenario because automatically resolving a conflict would mean the scheduler is making a judgment call it doesn't actually have enough context for. If "Vet drop-off" and "Vet pickup" collide, the algorithm has no way of knowing which one the owner would rather move, or whether the times were even entered correctly. Surfacing the conflict and letting a human make that call keeps the scheduler simple and predictable, and avoids a situation where it silently reschedules something important without the owner realizing it happened.
 
 ---
 
