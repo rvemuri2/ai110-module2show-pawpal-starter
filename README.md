@@ -84,18 +84,45 @@ Scheduled tasks (in order):
 
 ## 🧪 Testing PawPal+
 
+Description of tests: This suite has thirteen tests covering five areas: basic task/pet mechanics (marking complete, adding tasks), sorting (chronological order, flexible tasks sorting last), recurring tasks (daily/weekly spawning the correct next due date, one-off tasks not duplicating, and recurrence working even without a pet attached), conflict detection (flagging same-time tasks, correctly ignoring back-to-back tasks, and returning a clean empty string when nothing overlaps), and scheduling edge cases (empty task lists and tasks too long to fit the time budget, both handled gracefully instead of crashing).
+
 ```bash
 # Run the full test suite:
 pytest
+python -m pytest
 
 # Run with coverage:
 pytest --cov
 ```
 
 Sample test output:
+collected 13 items
+
+tests/test_pawpal.py ............. [100%]
+
+================================= 13 passed in 0.02s ==================================
 
 ```
 # Paste your pytest output here
+
+collected 13 items
+
+tests/test_pawpal.py::test_task_completion PASSED                               [  7%]
+tests/test_pawpal.py::test_task_addition_increases_pet_task_count PASSED        [ 15%]
+tests/test_pawpal.py::test_daily_task_spawns_next_occurrence_due_tomorrow PASSED [ 23%]
+tests/test_pawpal.py::test_non_recurring_task_does_not_spawn_next_occurrence PASSED [ 30%]
+tests/test_pawpal.py::test_weekly_task_spawns_next_occurrence_due_in_seven_days PASSED[ 38%]
+tests/test_pawpal.py::test_recurring_task_without_a_pet_does_not_crash PASSED   [ 46%]
+tests/test_pawpal.py::test_sort_by_time_returns_chronological_order PASSED      [ 53%]
+tests/test_pawpal.py::test_sort_by_time_puts_flexible_tasks_last PASSED         [ 61%]
+tests/test_pawpal.py::test_detect_conflicts_flags_duplicate_times PASSED        [ 69%]
+tests/test_pawpal.py::test_detect_conflicts_ignores_back_to_back_tasks PASSED   [ 76%]
+tests/test_pawpal.py::test_check_for_conflicts_returns_empty_string_when_no_conflicts PASSED [ 84%]
+tests/test_pawpal.py::test_generate_plan_with_no_tasks_does_not_crash PASSED    [ 92%]
+tests/test_pawpal.py::test_generate_plan_skips_task_that_does_not_fit_budget PASSED [100%]
+
+
+I'd rate this a 4 out of 5 stars. The tests are specific and deterministic rather than vague, and they cover the riskiest logic well, recurrence date math, conflict boundary conditions, and sorting, along with solid edge cases like empty task lists and missing pet references. It falls short of 5 because there's no full integration test exercising generate_plan() end-to-end with a realistic mix of tasks, and a few methods (filter_tasks(), Owner.get_tasks(), Pet.mark_task_complete()) have no test coverage at all yet.
 ```
 
 ## 📐 Smarter Scheduling
