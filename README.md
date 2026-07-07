@@ -47,6 +47,34 @@ pip install -r requirements.txt
 Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
 
 ```
+=== Today's Schedule for Mochi (dog) ===
+Total minutes used: 40 / 45
+
+08:00 AM - 08:05 AM | Give meds
+08:05 AM - 08:25 AM | Morning walk
+08:25 AM - 08:40 AM | Play fetch
+
+Scheduled tasks (in order):
+
+- 08:00 AM - 08:05 AM: Give meds (5 min), included because it's high priority and fixed-time commitment.
+- 08:05 AM - 08:25 AM: Morning walk (20 min), included because it's high priority.
+- 08:25 AM - 08:40 AM: Play fetch (15 min), included because it's medium priority.
+
+=== Today's Schedule for Luna (cat) ===
+Total minutes used: 30 / 45
+
+08:00 AM - 08:05 AM | Feed breakfast
+08:05 AM - 08:20 AM | Laser pointer playtime
+08:20 AM - 08:30 AM | Brush fur
+
+Scheduled tasks (in order):
+
+- 08:00 AM - 08:05 AM: Feed breakfast (5 min), included because it's high priority and fixed-time commitment.
+- 08:05 AM - 08:20 AM: Laser pointer playtime (15 min), included because it's medium priority.
+- 08:20 AM - 08:30 AM: Brush fur (10 min), included because it's low priority.
+```
+
+```
 # e.g.:
 # Daily plan for Biscuit (Golden Retriever):
 #   08:00 — Morning walk (30 min) [priority: high]
@@ -74,12 +102,12 @@ Sample test output:
 
 > Fill in once you've implemented scheduling logic.
 
-| Feature | Method(s) | Notes |
-|---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Feature           | Method(s) | Notes                             |
+| ----------------- | --------- | --------------------------------- |
+| Task sorting      |           | e.g., by priority, duration       |
+| Filtering         |           | e.g., skip tasks if time runs out |
+| Conflict handling |           | e.g., overlapping time slots      |
+| Recurring tasks   |           | e.g., daily vs. weekly            |
 
 ## 📸 Demo Walkthrough
 
@@ -91,4 +119,4 @@ Describe your app in numbered steps so a reader can follow along without watchin
 4. <!-- Describe this step -->
 5. <!-- Add more steps as needed -->
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
+**Screenshot or video** _(optional)_: <!-- Insert a screenshot or link to a demo video here -->
