@@ -1,0 +1,63 @@
+classDiagram
+    class Priority {
+        <<enumeration>>
+        LOW
+        MEDIUM
+        HIGH
+    }
+
+    class Owner {
+        +string name
+        +dict preferences
+        +List~Pet~ pets
+        +add_pet(pet)
+        +set_preference(key, value)
+        +get_tasks(pet_name, status) List~Task~
+    }
+
+    class Pet {
+        +string name
+        +string species
+        +Owner owner
+        +List~Task~ tasks
+        +add_task(task)
+        +get_tasks() List~Task~
+        +get_tasks_by_status(completed) List~Task~
+        +mark_task_complete(task) Task
+    }
+
+    class Task {
+        +string id
+        +string title
+        +int duration_minutes
+        +Priority priority
+        +string category
+        +bool is_flexible
+        +bool completed
+        +string fixed_time
+        +string frequency
+        +date due_date
+        +date last_completed_date
+        +Pet pet
+        +mark_complete(completed_date) Task
+        +is_due(today) bool
+        -_create_next_occurrence(from_date) Task
+    }
+
+    class Scheduler {
+        +generate_plan(tasks, available_minutes, preferences, start_time) dict
+        +explain_plan(timeline, skipped, conflicts) string
+        +sort_by_time(tasks) List~Task~
+        +filter_tasks(tasks, completed, pet_name) List~Task~
+        +detect_conflicts(tasks) List~tuple~
+        +check_for_conflicts(tasks) string
+        -_sort_by_priority(tasks) List~Task~
+        -_fits_in_remaining_time(task, remaining) bool
+    }
+
+    Owner "1" o-- "*" Pet : has
+    Pet "*" --> "1" Owner : owner (back-ref)
+    Pet "1" o-- "*" Task : has
+    Task "*" --> "1" Pet : pet (back-ref)
+    Task "1" -- "1" Priority : rated
+    Scheduler ..> Task : sorts, filters, reads
